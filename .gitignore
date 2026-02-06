@@ -2,15 +2,20 @@
 
 # Configuration (company-specific)
 config.json
+scripts/config.json
 
 # Encrypted credentials
 Credentials/
+scripts/Credentials/
 *.cred
 
 # Runtime files
 ErrorLog_*.txt
 MasterExpenseList.txt
 ExpenseList.xml
+scripts/ErrorLog_*.txt
+scripts/MasterExpenseList.txt
+scripts/ExpenseList.xml
 
 # Downloaded PDFs (if local testing)
 CRExpenses/

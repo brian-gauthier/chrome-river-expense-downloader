@@ -39,12 +39,14 @@ chrome-river-expense-downloader/
 │   ├── cr_getExpenseImages_PS5.ps1    # Main script
 │   ├── Get-Configuration.ps1          # Configuration loader helper
 │   ├── Get-SecureCredentials.ps1      # Credential management helper
-│   └── Setup-SecureCredentials.ps1        # Credential setup utility
+│   ├── Setup-SecureCredentials.ps1    # Credential setup utility
+│   ├── config.json                    # Your configuration (create from template, not in repo)
+│   └── Credentials/
+│       └── ChromeRiver.cred           # Encrypted credentials (not in repo)
 ├── .gitignore                         # Git ignore rules
 ├── CONTRIBUTING.md                    # Contribution guidelines
 ├── LICENSE                            # MIT License
-├── README.md                          # This file
-└── config.json                        # Your configuration (create from template, not in repo)
+└── README.md                          # This file
 ```
 
 ## Setup Instructions
@@ -55,8 +57,8 @@ Download all project files to a local directory.
 
 ### 2. Create Configuration File
 
-1. Copy `examples/config.template.json` to `config.json` (in the root directory)
-2. Edit `config.json` with your company settings:
+1. Copy `examples/config.template.json` to `scripts/config.json`
+2. Edit `scripts/config.json` with your company settings:
 
 ```json
 {

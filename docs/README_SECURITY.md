@@ -71,14 +71,14 @@ ChromeRiver\
 ├── docs/                            # Documentation
 ├── examples/
 │   └── config.template.json         # Configuration template
-├── scripts/
-│   ├── cr_getExpenseImages_PS5.ps1  # Main script (PowerShell 5.1+)
-│   ├── Setup-SecureCredentials.ps1  # One-time setup (run first)
-│   ├── Get-SecureCredentials.ps1    # Helper function (auto-loaded)
-│   ├── Get-Configuration.ps1        # Config loader (auto-loaded)
-│   └── Credentials\
-│       └── ChromeRiver.cred         # Encrypted credentials (auto-created)
-└── config.json                      # Your configuration (DO NOT COMMIT)
+└── scripts/
+    ├── cr_getExpenseImages_PS5.ps1  # Main script (PowerShell 5.1+)
+    ├── Setup-SecureCredentials.ps1  # One-time setup (run first)
+    ├── Get-SecureCredentials.ps1    # Helper function (auto-loaded)
+    ├── Get-Configuration.ps1        # Config loader (auto-loaded)
+    ├── config.json                  # Your configuration (DO NOT COMMIT)
+    └── Credentials\
+        └── ChromeRiver.cred         # Encrypted credentials (auto-created)
 ```
 
 ## 🔄 Updating Credentials
@@ -94,13 +94,13 @@ This will overwrite the existing credential file.
 ## ⚠️ Important Security Notes
 
 ### ✅ DO:
-- Keep the `Credentials\` folder secure
+- Keep the `scripts/Credentials\` folder secure
 - Run the setup script as the same user who will run the main scripts
 - Back up the credential file if needed (still encrypted)
 
 ### ❌ DON'T:
 - Share the credential file (it's user/machine specific anyway)
-- Commit the credential file to Git (add to `.gitignore`)
+- Commit config.json or credential files to Git (already in `.gitignore`)
 - Run the main scripts as a different user than who created the credentials
 
 ## 🔧 Troubleshooting

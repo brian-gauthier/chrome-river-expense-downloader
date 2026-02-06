@@ -21,12 +21,12 @@ C:\ExpenseAutomation\ChromeRiver\
 
 ### Step 2: Create Configuration File
 
-1. Copy `examples/config.template.json` to `config.json` (in the root directory):
+1. Copy `examples/config.template.json` to `scripts/config.json`:
    ```powershell
-   Copy-Item examples\config.template.json config.json
+   Copy-Item examples\config.template.json scripts\config.json
    ```
 
-2. Edit `config.json` with your company settings:
+2. Edit `scripts/config.json` with your company settings:
 
 ```json
 {
@@ -134,7 +134,7 @@ Simply run from PowerShell:
 
 ### ✅ DO:
 - Run setup script as the service account that will execute the task
-- Keep `config.json` and `Credentials/` folder secure
+- Keep `scripts/config.json` and `scripts/Credentials/` folder secure
 - Use a dedicated service account with minimal permissions
 - Store credentials encrypted (done automatically)
 - Review error logs regularly
@@ -171,7 +171,7 @@ After each run, review:
    ```
 
 3. **Downloaded PDFs**:
-   Check the `OutputFolder` specified in `config.json`
+   Check the `OutputFolder` specified in `scripts/config.json`
 
 ### Common Issues
 
@@ -179,7 +179,7 @@ After each run, review:
 |-------|----------|
 | "Credential file not found" | Run `scripts\Setup-SecureCredentials.ps1` first |
 | "Failed to decrypt credentials" | Re-run setup as the correct user |
-| "Configuration file not found" | Copy `examples\config.template.json` to `config.json` |
+| "Configuration file not found" | Copy `examples\config.template.json` to `scripts\config.json` |
 | "Access denied" to output folder | Check folder permissions |
 | No new expenses found | Normal if already downloaded recently |
 
@@ -187,7 +187,6 @@ After each run, review:
 
 ```
 ChromeRiver/
-├── config.json                       # Your company configuration (DO NOT COMMIT)
 ├── docs/                             # Documentation
 │   ├── DEPLOYMENT_GUIDE.md
 │   └── README_SECURITY.md
@@ -198,24 +197,29 @@ ChromeRiver/
 │   ├── Get-Configuration.ps1         # Config loader (auto-loaded)
 │   ├── Get-SecureCredentials.ps1     # Credential loader (auto-loaded)
 │   ├── Setup-SecureCredentials.ps1   # One-time credential setup
-│   └── Credentials/
-│       └── ChromeRiver.cred          # Encrypted credentials (DO NOT COMMIT)
-├── MasterExpenseList.txt             # Tracking file (auto-created)
-├── ExpenseList.xml                   # Temp file (auto-created)
-└── ErrorLog_*.txt                    # Error logs (auto-created)
+│   ├── config.json                   # Your configuration (DO NOT COMMIT)
+│   ├── Credentials/
+│   │   └── ChromeRiver.cred          # Encrypted credentials (DO NOT COMMIT)
+│   ├── MasterExpenseList.txt         # Tracking file (auto-created)
+│   ├── ExpenseList.xml               # Temp file (auto-created)
+│   └── ErrorLog_*.txt                # Error logs (auto-created)
+├── .gitignore
+├── CONTRIBUTING.md
+├── LICENSE
+└── README.md
 ```
 
 ## 🔄 Updating for New Companies
 
 1. Copy all files to new location
-2. Create new `config.json` from `examples/config.template.json`
+2. Create new `scripts/config.json` from `examples/config.template.json`
 3. Run `scripts\Setup-SecureCredentials.ps1` with new company's API credentials
-4. Update `OutputFolder` in `config.json`
+4. Update `OutputFolder` in `scripts/config.json`
 5. Test execution
 6. Schedule task
 
 **Each company needs:**
-- ✅ Their own `config.json`
+- ✅ Their own `scripts/config.json`
 - ✅ Their own encrypted credentials
 - ✅ Their own output folder
 - ✅ Separate scheduled task (if automated)
@@ -224,7 +228,7 @@ ChromeRiver/
 
 For issues:
 1. Check error logs: `ErrorLog_*.txt`
-2. Verify configuration: `config.json`
+2. Verify configuration: `scripts/config.json`
 3. Test credentials: Run setup script again
 4. Review permissions: Output folder, network access
 5. Check Chrome River API status

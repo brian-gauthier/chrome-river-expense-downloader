@@ -1,0 +1,30 @@
+{
+  "CompanyName": "YOUR_COMPANY_NAME",
+  "ChromeRiverAPI": {
+    "BaseUrl": "https://service.chromeriver.com/expense-image-api",
+    "DaysBack": 30,
+    "MaxParallelDownloads": 5
+  },
+  "OutputSettings": {
+    "OutputFolder": "C:\\ExpenseReports\\ChromeRiver",
+    "MasterListFile": "MasterExpenseList.txt",
+    "ExpenseListFile": "ExpenseList.xml",
+    "ErrorLogPrefix": "ErrorLog"
+  },
+  "APIParameters": {
+    "GetMileageDetails": false,
+    "GetImage": true,
+    "GetPDFReport": true,
+    "GetPDFReportWithNotes": false,
+    "ImageFirst": false,
+    "FailOnImageFetchError": false
+  },
+  "Comments": {
+    "CompanyName": "Used for identification in logs",
+    "BaseUrl": "Chrome River API base URL (usually doesn't change)",
+    "DaysBack": "Number of days to look back for expenses",
+    "MaxParallelDownloads": "Number of concurrent downloads (5-10 recommended)",
+    "OutputFolder": "Where to save downloaded PDF files (use double backslashes)",
+    "Credentials": "API credentials are stored separately in Credentials/ChromeRiver.cred"
+  }
+}

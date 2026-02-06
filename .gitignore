@@ -1,0 +1,50 @@
+# Chrome River - Secure Files (DO NOT COMMIT)
+
+# Configuration (company-specific)
+config.json
+
+# Encrypted credentials
+Credentials/
+*.cred
+
+# Runtime files
+ErrorLog_*.txt
+MasterExpenseList.txt
+ExpenseList.xml
+
+# Downloaded PDFs (if local testing)
+CRExpenses/
+*.pdf
+
+# PowerShell temporary files
+*.ps1.bak
+*.ps1~
+
+# IDE and Editor files
+.vscode/
+.vs/
+*.code-workspace
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Testing
+TestResults/
+*.trx
+
+# OS files
+desktop.ini
+.Spotlight-V100
+.Trashes
+
+# Personal notes
+NOTES.md
+TODO.md
+scratch/

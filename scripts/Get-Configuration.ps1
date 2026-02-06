@@ -6,7 +6,8 @@
 function Get-ChromeRiverConfiguration {
     [CmdletBinding()]
     param(
-        [string]$ConfigPath = (Join-Path $PSScriptRoot "config.json")
+        # Look for config.json in the parent directory (root level)
+        [string]$ConfigPath = (Join-Path (Split-Path $PSScriptRoot -Parent) "config.json")
     )
 
     # Check if config file exists
@@ -15,9 +16,9 @@ function Get-ChromeRiverConfiguration {
 Configuration file not found: $ConfigPath
 
 Please create config.json from the template:
-1. Copy config.template.json to config.json
+1. Copy examples/config.template.json to config.json (in the root directory)
 2. Update the settings for your company
-3. Run Setup-SecureCredentials.ps1 to configure API credentials
+3. Run scripts/Setup-SecureCredentials.ps1 to configure API credentials
 "@
     }
 

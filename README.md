@@ -36,7 +36,7 @@ chrome-river-expense-downloader/
 ├── examples/
 │   └── config.template.json           # Configuration template
 ├── scripts/
-│   ├── cr_getExpenseImages_PS5.ps1    # Main script
+│   ├── Get-ExpenseImages.ps1    # Main script
 │   ├── Get-Configuration.ps1          # Configuration loader helper
 │   ├── Get-SecureCredentials.ps1      # Credential management helper
 │   ├── Setup-SecureCredentials.ps1    # Credential setup utility
@@ -103,7 +103,7 @@ Credentials are encrypted using Windows DPAPI and can only be decrypted by the s
 ### 4. Run the Script
 
 ```powershell
-.\scripts\cr_getExpenseImages_PS5.ps1
+.\scripts\Get-ExpenseImages.ps1
 ```
 
 ## Usage

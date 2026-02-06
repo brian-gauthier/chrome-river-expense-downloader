@@ -91,7 +91,7 @@ Run a test execution:
 
 **PowerShell 5.1 (Main Script):**
 ```powershell
-.\scripts\cr_getExpenseImages_PS5.ps1
+.\scripts\Get-ExpenseImages.ps1
 ```
 
 You should see:
@@ -115,7 +115,7 @@ You should see:
    - **Program**: `powershell.exe`
    - **Arguments**:
      ```
-     -ExecutionPolicy Bypass -File "C:\ExpenseAutomation\ChromeRiver\scripts\cr_getExpenseImages_PS5.ps1"
+     -ExecutionPolicy Bypass -File "C:\ExpenseAutomation\ChromeRiver\scripts\Get-ExpenseImages.ps1"
      ```
    - **Start in**: `C:\ExpenseAutomation\ChromeRiver`
 
@@ -127,7 +127,7 @@ You should see:
 
 Simply run from PowerShell:
 ```powershell
-.\scripts\cr_getExpenseImages_PS5.ps1
+.\scripts\Get-ExpenseImages.ps1
 ```
 
 ## 🔐 Security Best Practices
@@ -193,7 +193,7 @@ ChromeRiver/
 ├── examples/
 │   └── config.template.json          # Template for new deployments
 ├── scripts/
-│   ├── cr_getExpenseImages_PS5.ps1   # Main script (PowerShell 5.1+)
+│   ├── Get-ExpenseImages.ps1   # Main script (PowerShell 5.1+)
 │   ├── Get-Configuration.ps1         # Config loader (auto-loaded)
 │   ├── Get-SecureCredentials.ps1     # Credential loader (auto-loaded)
 │   ├── Setup-SecureCredentials.ps1   # One-time credential setup

@@ -18,7 +18,7 @@ This solution uses **Windows Data Protection API (DPAPI)** to securely encrypt y
 ### Step 1: Run the Setup Script (ONE TIME)
 
 ```powershell
-.\Setup-SecureCredentials.ps1
+.\scripts\Setup-SecureCredentials.ps1
 ```
 
 You will be prompted for:
@@ -37,12 +37,12 @@ Both scripts now automatically load encrypted credentials:
 
 **PowerShell 7+:**
 ```powershell
-.\cr_getExpenseImages.ps1
+.\scripts\cr_getExpenseImages_PS5.ps1
 ```
 
 **PowerShell 5.1:**
 ```powershell
-.\cr_getExpenseImages_PS5.ps1
+.\scripts\cr_getExpenseImages_PS5.ps1
 ```
 
 ## 🔒 How It Works
@@ -81,7 +81,7 @@ ChromeRiver\
 If you need to update your API key or other credentials:
 
 ```powershell
-.\Setup-SecureCredentials.ps1
+.\scripts\Setup-SecureCredentials.ps1
 ```
 
 This will overwrite the existing credential file.

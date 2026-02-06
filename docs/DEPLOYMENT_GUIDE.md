@@ -21,9 +21,9 @@ C:\ExpenseAutomation\ChromeRiver\
 
 ### Step 2: Create Configuration File
 
-1. Copy `config.template.json` to `config.json`:
+1. Copy `examples/config.template.json` to `config.json` (in the root directory):
    ```powershell
-   Copy-Item config.template.json config.json
+   Copy-Item examples\config.template.json config.json
    ```
 
 2. Edit `config.json` with your company settings:
@@ -71,7 +71,7 @@ Run the credential setup script:
 
 ```powershell
 cd C:\ExpenseAutomation\ChromeRiver
-.\Setup-SecureCredentials.ps1
+.\scripts\Setup-SecureCredentials.ps1
 ```
 
 Enter when prompted:
@@ -89,14 +89,9 @@ This creates an encrypted credential file that only works for:
 
 Run a test execution:
 
-**PowerShell 7+:**
+**PowerShell 5.1 (Main Script):**
 ```powershell
-.\cr_getExpenseImages.ps1
-```
-
-**PowerShell 5.1:**
-```powershell
-.\cr_getExpenseImages_PS5.ps1
+.\scripts\cr_getExpenseImages_PS5.ps1
 ```
 
 You should see:
@@ -120,7 +115,7 @@ You should see:
    - **Program**: `powershell.exe`
    - **Arguments**:
      ```
-     -ExecutionPolicy Bypass -File "C:\ExpenseAutomation\ChromeRiver\cr_getExpenseImages_PS5.ps1"
+     -ExecutionPolicy Bypass -File "C:\ExpenseAutomation\ChromeRiver\scripts\cr_getExpenseImages_PS5.ps1"
      ```
    - **Start in**: `C:\ExpenseAutomation\ChromeRiver`
 
@@ -130,9 +125,9 @@ You should see:
 
 ### Option 2: Manual Execution
 
-Simply double-click the script or run from PowerShell:
+Simply run from PowerShell:
 ```powershell
-.\cr_getExpenseImages_PS5.ps1
+.\scripts\cr_getExpenseImages_PS5.ps1
 ```
 
 ## 🔐 Security Best Practices
@@ -182,9 +177,9 @@ After each run, review:
 
 | Issue | Solution |
 |-------|----------|
-| "Credential file not found" | Run `Setup-SecureCredentials.ps1` first |
+| "Credential file not found" | Run `scripts\Setup-SecureCredentials.ps1` first |
 | "Failed to decrypt credentials" | Re-run setup as the correct user |
-| "Configuration file not found" | Create `config.json` from template |
+| "Configuration file not found" | Copy `examples\config.template.json` to `config.json` |
 | "Access denied" to output folder | Check folder permissions |
 | No new expenses found | Normal if already downloaded recently |
 
@@ -192,25 +187,29 @@ After each run, review:
 
 ```
 ChromeRiver/
-├── config.json                    # Your company configuration (DO NOT COMMIT)
-├── config.template.json           # Template for new deployments
-├── cr_getExpenseImages.ps1        # PowerShell 7+ version
-├── cr_getExpenseImages_PS5.ps1    # PowerShell 5.1 version
-├── Setup-SecureCredentials.ps1    # One-time credential setup
-├── Get-Configuration.ps1          # Config loader (auto-loaded)
-├── Get-SecureCredentials.ps1      # Credential loader (auto-loaded)
-├── Credentials/
-│   └── ChromeRiver.cred          # Encrypted credentials (DO NOT COMMIT)
-├── MasterExpenseList.txt         # Tracking file (auto-created)
-├── ExpenseList.xml               # Temp file (auto-created)
-└── ErrorLog_*.txt                # Error logs (auto-created)
+├── config.json                       # Your company configuration (DO NOT COMMIT)
+├── docs/                             # Documentation
+│   ├── DEPLOYMENT_GUIDE.md
+│   └── README_SECURITY.md
+├── examples/
+│   └── config.template.json          # Template for new deployments
+├── scripts/
+│   ├── cr_getExpenseImages_PS5.ps1   # Main script (PowerShell 5.1+)
+│   ├── Get-Configuration.ps1         # Config loader (auto-loaded)
+│   ├── Get-SecureCredentials.ps1     # Credential loader (auto-loaded)
+│   ├── Setup-SecureCredentials.ps1   # One-time credential setup
+│   └── Credentials/
+│       └── ChromeRiver.cred          # Encrypted credentials (DO NOT COMMIT)
+├── MasterExpenseList.txt             # Tracking file (auto-created)
+├── ExpenseList.xml                   # Temp file (auto-created)
+└── ErrorLog_*.txt                    # Error logs (auto-created)
 ```
 
 ## 🔄 Updating for New Companies
 
 1. Copy all files to new location
-2. Create new `config.json` from template
-3. Run `Setup-SecureCredentials.ps1` with new company's API credentials
+2. Create new `config.json` from `examples/config.template.json`
+3. Run `scripts\Setup-SecureCredentials.ps1` with new company's API credentials
 4. Update `OutputFolder` in `config.json`
 5. Test execution
 6. Schedule task

@@ -68,12 +68,17 @@ Both scripts now automatically load encrypted credentials:
 
 ```
 ChromeRiver\
-├── Setup-SecureCredentials.ps1      # One-time setup (run first)
-├── Get-SecureCredentials.ps1        # Helper function (auto-loaded)
-├── cr_getExpenseImages.ps1          # PowerShell 7+ version
-├── cr_getExpenseImages_PS5.ps1      # PowerShell 5.1 version
-└── Credentials\
-    └── ChromeRiver.cred             # Encrypted credentials (auto-created)
+├── docs/                            # Documentation
+├── examples/
+│   └── config.template.json         # Configuration template
+├── scripts/
+│   ├── cr_getExpenseImages_PS5.ps1  # Main script (PowerShell 5.1+)
+│   ├── Setup-SecureCredentials.ps1  # One-time setup (run first)
+│   ├── Get-SecureCredentials.ps1    # Helper function (auto-loaded)
+│   ├── Get-Configuration.ps1        # Config loader (auto-loaded)
+│   └── Credentials\
+│       └── ChromeRiver.cred         # Encrypted credentials (auto-created)
+└── config.json                      # Your configuration (DO NOT COMMIT)
 ```
 
 ## 🔄 Updating Credentials

@@ -49,6 +49,12 @@ C:\ExpenseAutomation\ChromeRiver\
     "GetPDFReportWithNotes": false,
     "ImageFirst": false,
     "FailOnImageFetchError": false
+  },
+  "ValidationSettings": {
+    "MaxRetryAttempts": 3,
+    "RetryStateFile": "PDFRetryState.json",
+    "ValidationReportFile": "ValidationReport.txt",
+    "PermanentFailuresFile": "PermanentFailures.txt"
   }
 }
 ```
@@ -89,7 +95,7 @@ This creates an encrypted credential file that only works for:
 
 Run a test execution:
 
-**PowerShell 5.1 (Main Script):**
+**Step 4a: Download Expense PDFs**
 ```powershell
 .\scripts\Get-ExpenseImages.ps1
 ```
@@ -99,13 +105,28 @@ You should see:
 - ✅ Credentials loaded
 - ✅ Expenses retrieved and downloaded
 
+**Step 4b: Validate PDFs and Retry Failures ⭐ NEW**
+```powershell
+.\scripts\Test-ExpenseImageIntegrity.ps1
+```
+
+You should see:
+- ✅ PDFs scanned and validated
+- ✅ Corrupt PDFs identified (if any)
+- ✅ Automatic retry downloads (if corrupt PDFs found)
+- ✅ Validation report generated
+
+**Note**: On first run before any PDFs are downloaded, the validation script will exit gracefully with an info message that the output folder doesn't exist yet.
+
 ## 📅 Schedule Automated Execution
 
 ### Option 1: Windows Task Scheduler (Recommended)
 
+#### Task 1: Download Expense PDFs
+
 1. Open Task Scheduler (`taskschd.msc`)
 2. Create a new task:
-   - **Name**: Chrome River Expense Retrieval
+   - **Name**: Chrome River Expense Retrieval - Download
    - **Run whether user is logged on or not**: ✓
    - **Run with highest privileges**: ✓
 
@@ -123,11 +144,53 @@ You should see:
    - ✓ Allow task to be run on demand
    - ✓ If the task fails, restart every 10 minutes
 
+#### Task 2: Validate PDFs and Retry ⭐ NEW
+
+1. Create a second task:
+   - **Name**: Chrome River Expense Retrieval - Validation
+   - **Run whether user is logged on or not**: ✓
+   - **Run with highest privileges**: ✓
+
+2. **Triggers**:
+   - **Option A (Recommended)**: Daily at 10 minutes after download task (e.g., 6:10 AM)
+   - **Option B**: Trigger on completion of Task 1 (requires additional configuration)
+
+3. **Actions**: Start a program
+   - **Program**: `powershell.exe`
+   - **Arguments**:
+     ```
+     -ExecutionPolicy Bypass -File "C:\ExpenseAutomation\ChromeRiver\scripts\Test-ExpenseImageIntegrity.ps1"
+     ```
+   - **Start in**: `C:\ExpenseAutomation\ChromeRiver`
+
+4. **Settings**:
+   - ✓ Allow task to be run on demand
+   - ✓ If the task fails, restart every 5 minutes
+
+**Alternative: Single Task with Sequential Execution**
+
+You can also create a wrapper script to run both sequentially:
+
+**Create `RunBothScripts.ps1`:**
+```powershell
+# Download PDFs
+.\scripts\Get-ExpenseImages.ps1
+
+# Validate and retry
+.\scripts\Test-ExpenseImageIntegrity.ps1
+```
+
+Then schedule this single script in Task Scheduler.
+
 ### Option 2: Manual Execution
 
-Simply run from PowerShell:
+Run both scripts sequentially:
 ```powershell
+# Download expense PDFs
 .\scripts\Get-ExpenseImages.ps1
+
+# Validate and retry corrupt PDFs
+.\scripts\Test-ExpenseImageIntegrity.ps1
 ```
 
 ## 🔐 Security Best Practices
@@ -152,6 +215,8 @@ Simply run from PowerShell:
 After each run, review:
 
 1. **Console Output** (if running interactively):
+
+   **Download Script:**
    ```
    ========================================
    SUMMARY REPORT
@@ -165,12 +230,39 @@ After each run, review:
    ========================================
    ```
 
-2. **Error Log** (if failures occurred):
+   **Validation Script ⭐ NEW:**
    ```
-   ErrorLog_20260206_083022.txt
+   ========================================
+     VALIDATION & RETRY SUMMARY
+   ========================================
+
+   Total PDFs Scanned:       150
+   Valid PDFs:               148
+   Corrupt PDFs Found:       2
+
+   Retry Attempts:           2
+   Retry Successes:          2
+   Retry Failures:           0
+   Permanent Failures:       0
+
+   Execution Time:           00:15
+   ========================================
    ```
 
-3. **Downloaded PDFs**:
+2. **Error Logs** (if failures occurred):
+   ```
+   ErrorLog_20260206_083022.txt              # Download errors
+   ErrorLog_Validation_20260206_083522.txt   # Validation errors
+   ```
+
+3. **Validation Reports ⭐ NEW**:
+   ```
+   ValidationReport.txt       # Detailed validation results
+   PermanentFailures.txt     # PDFs that failed all retry attempts
+   PDFRetryState.json        # Retry state tracking
+   ```
+
+4. **Downloaded PDFs**:
    Check the `OutputFolder` specified in `scripts/config.json`
 
 ### Common Issues
@@ -182,6 +274,9 @@ After each run, review:
 | "Configuration file not found" | Copy `examples\config.template.json` to `scripts\config.json` |
 | "Access denied" to output folder | Check folder permissions |
 | No new expenses found | Normal if already downloaded recently |
+| Validation script: "Output folder doesn't exist" | Normal on first run - run download script first |
+| Validation script: PDFs keep failing retries | Check `PermanentFailures.txt` for details; may require manual intervention |
+| Validation script: State file corrupt | Script auto-recovers from backup; no action needed |
 
 ## 📁 File Structure
 
